@@ -17,38 +17,34 @@ class Maze:
     ):
         self.__win = win
         self.__cells: list[list[Cell]] = []
-        self.__create_cells(margin,
-                            num_rows,
-                            num_cols,
-                            cell_size_x,
-                            cell_size_y)
+        self.__num_rows = num_rows
+        self.__num_cols = num_cols
+        self.__margin = margin
+        self.__cell_size_x = cell_size_x
+        self.__cell_size_y = cell_size_y
 
-    def __create_cells(self,
-                       margin: Point,
-                       num_rows: int,
-                       num_cols: int,
-                       cell_size_x: float,
-                       cell_size_y: float,
-                       ):
-        for col in range(num_cols):
+        self.__create_cells()
+
+    def __create_cells(self):
+        for col in range(self.__num_cols):
             curr_col: list[Cell] = []
-            for row in range(num_rows):
+            for row in range(self.__num_rows):
                 curr_col.append(Cell(self.__win))
             self.__cells.append(curr_col)
 
-        for col in range(num_cols):
-            for row in range(num_rows):
-                self.__draw_cell(margin, col, row, cell_size_x, cell_size_y)
+        for col in range(self.__num_cols):
+            for row in range(self.__num_rows):
+                self.__draw_cell(col, row)
 
-    def __draw_cell(self, margin: Point, col: int, row: int, cell_size_x: float, cell_size_y: float):
+    def __draw_cell(self, col: int, row: int):
         self.__cells[col][row].draw(
             Point(
-                margin.x + col * cell_size_x,
-                margin.y + row * cell_size_y
+                self.__margin.x + col * self.__cell_size_x,
+                self.__margin.y + row * self.__cell_size_y
             ),
             Point(
-                margin.x + (col+1) * cell_size_x,
-                margin.y + (row+1) * cell_size_y
+                self.__margin.x + (col+1) * self.__cell_size_x,
+                self.__margin.y + (row+1) * self.__cell_size_y
             )
         )
         self.__animate()
