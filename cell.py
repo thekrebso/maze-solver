@@ -1,10 +1,11 @@
+from typing import Optional
 from point import Point
 from line import Line
 from window import Window
 
 
 class Cell:
-    def __init__(self, window: Window):
+    def __init__(self, window: Optional[Window] = None):
         self.has_left_wall = True
         self.has_right_wall = True
         self.has_top_wall = True
@@ -16,6 +17,9 @@ class Cell:
     def draw(self, begin: Point, end: Point):
         self.__begin = begin
         self.__end = end
+
+        if self.__win is None:
+            return
 
         if self.has_left_wall:
             self.__win.draw_line(
@@ -39,6 +43,9 @@ class Cell:
             )
 
     def draw_move(self, to_cell: 'Cell', undo: bool = False):
+        if self.__win is None:
+            return
+
         from_center = Point(
             (self.__begin.x + self.__end.x) / 2,
             (self.__begin.y + self.__end.y) / 2
