@@ -54,14 +54,18 @@ class Maze:
                 self.__margin.y + (row+1) * self.__cell_size_y
             )
         )
-        self.__animate()
+        self.__animate(True)
 
-    def __animate(self):
+    def __animate(self, fast: bool = False):
         if self.__win is None:
             return
 
         self.__win.redraw()
-        sleep(0.05)
+
+        if fast:
+            sleep(0.015)
+        else:
+            sleep(0.05)
 
     def __break_entrance_and_exit(self):
         self.__cells[0][0].has_top_wall = False
