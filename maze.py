@@ -1,3 +1,4 @@
+import random
 from typing import Optional
 from time import sleep
 from point import Point
@@ -13,7 +14,8 @@ class Maze:
             num_cols: int,
             cell_size_x: float,
             cell_size_y: float,
-            win: Optional[Window] = None
+            win: Optional[Window] = None,
+            seed: Optional[int] = None
     ):
         self.__win = win
         self.__cells: list[list[Cell]] = []
@@ -22,6 +24,8 @@ class Maze:
         self.__margin = margin
         self.__cell_size_x = cell_size_x
         self.__cell_size_y = cell_size_y
+        if seed is not None:
+            random.seed(seed)
 
         self.__create_cells()
         self.__break_entrance_and_exit()
