@@ -1,6 +1,6 @@
 from point import Point
 from line import Line
-from window import Window 
+from window import Window
 
 
 class Cell:
@@ -17,24 +17,24 @@ class Cell:
         self.__begin = begin
         self.__end = end
 
-        if self.has_left_wall: 
+        if self.has_left_wall:
             self.__win.draw_line(
-                Line(self.__begin, Point(self.__begin.x, self.__end.y)), 
+                Line(self.__begin, Point(self.__begin.x, self.__end.y)),
                 "black"
             )
-        if self.has_right_wall: 
+        if self.has_right_wall:
             self.__win.draw_line(
-                Line(Point(self.__end.x, self.__begin.y), self.__end), 
+                Line(Point(self.__end.x, self.__begin.y), self.__end),
                 "black"
             )
-        if self.has_top_wall: 
+        if self.has_top_wall:
             self.__win.draw_line(
-                Line(self.__begin, Point(self.__end.x, self.__begin.y)), 
+                Line(self.__begin, Point(self.__end.x, self.__begin.y)),
                 "black"
             )
-        if self.has_bottom_wall: 
+        if self.has_bottom_wall:
             self.__win.draw_line(
-                Line(Point(self.__begin.x, self.__end.y), self.__end), 
+                Line(Point(self.__begin.x, self.__end.y), self.__end),
                 "black"
             )
 

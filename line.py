@@ -1,4 +1,4 @@
-from tkinter import Canvas 
+from tkinter import Canvas
 from point import Point
 
 
