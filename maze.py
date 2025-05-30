@@ -25,6 +25,8 @@ class Maze:
 
         self.__create_cells()
         self.__break_entrance_and_exit()
+        self.__break_walls_r(0, 0)
+        self.__reset_cells_visited()
 
     def __create_cells(self):
         for col in range(self.__num_cols):
@@ -63,3 +65,53 @@ class Maze:
         self.__cells[self.__num_cols -
                      1][self.__num_rows-1].has_bottom_wall = False
         self.__draw_cell(self.__num_cols-1, self.__num_rows-1)
+
+    def __break_walls_r(self, col: int, row: int):
+        self.__cells[col][row].visited = True
+
+        while True:
+            possible_directions: list[tuple[int, int]] = []
+            directions = [(-1, 0), (0, 1), (1, 0), (0, -1)]
+            for direction in directions:
+                next_col = col + direction[0]
+                next_row = row + direction[1]
+                if (
+                    next_col >= 0 and next_col < self.__num_cols and
+                    next_row >= 0 and next_row < self.__num_rows and
+                    not self.__cells[next_col][next_row].visited
+                ):
+                    possible_directions.append((next_col, next_row))
+
+            if len(possible_directions) == 0:
+                self.__draw_cell(col, row)
+                return
+
+            direction = random.randint(0, len(possible_directions) - 1)
+            next_col = possible_directions[direction][0]
+            next_row = possible_directions[direction][1]
+
+            dc = next_col - col
+            dr = next_row - row
+
+            if dr == -1:
+                self.__cells[col][row].has_top_wall = False
+                self.__cells[next_col][next_row].has_bottom_wall = False
+            if dr == 1:
+                self.__cells[col][row].has_bottom_wall = False
+                self.__cells[next_col][next_row].has_top_wall = False
+            if dc == 1:
+                self.__cells[col][row].has_right_wall = False
+                self.__cells[next_col][next_row].has_left_wall = False
+            if dc == -1:
+                self.__cells[col][row].has_left_wall = False
+                self.__cells[next_col][next_row].has_right_wall = False
+
+            self.__draw_cell(col, row)
+            self.__draw_cell(next_col, next_row)
+
+            self.__break_walls_r(next_col, next_row)
+
+    def __reset_cells_visited(self):
+        for col in self.__cells:
+            for row in col:
+                row.visited = False

@@ -10,6 +10,7 @@ class Cell:
         self.has_right_wall = True
         self.has_top_wall = True
         self.has_bottom_wall = True
+        self.visited = False
         self.__win = window
         self.__begin = Point(-1, -1)
         self.__end = Point(-1, -1)
